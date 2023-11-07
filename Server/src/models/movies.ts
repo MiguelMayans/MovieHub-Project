@@ -6,7 +6,7 @@ const MovieSchema = new Schema(
         id: { type: String, required: true, unique: true },
         name: { type: String, required: true },
         posterImage: { type: String, required: true, unique: true },
-        score: Number,
+        score: { type: Number, min: 0, max: 10 },
         genre: Genre
     })
 
