@@ -1,10 +1,14 @@
 import './App.css'
+import Footer from './components/Footer/Footer'
+import Header from './components/Header/Header'
 
 function App() {
 
   return (
     <>
-      <h1>Movie Hub Project</h1>
+      <Header />
+
+      <Footer />
     </>
   )
 }
