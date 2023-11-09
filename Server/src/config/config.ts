@@ -35,7 +35,7 @@ const CONFIG: TConfig = {
         },
         db: {
             URI:
-                process.env.MONGO_DB_URI || "mongodb://localhost:27017"
+                process.env.MONGO_DB_URI || "mongodb://localhost:27017/test_development"
         }
     },
     production: {
@@ -44,7 +44,7 @@ const CONFIG: TConfig = {
         },
         db: {
             URI:
-                process.env.MONGO_DB_URI || "mongodb://localhost:27017"
+                process.env.MONGO_DB_URI || "mongodb://localhost:27017/test_production"
         }
     }
 }

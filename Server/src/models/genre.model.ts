@@ -3,7 +3,6 @@ import MovieModel, { IMovieDocument } from "./movies.model";
 
 export interface IGenreDocument extends Document {
     name: string,
-
 }
 
 
