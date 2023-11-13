@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import UserModel from "../models/user.model"
+import prisma from "../db/client"
 
 export const getAllUsers = async (req: Request, res: Response) => {
 
@@ -21,7 +22,7 @@ export const createUser = async (req: Request, res: Response) => {
 
     try {
         if (!name || !email || !password) throw new Error("Missing fields")
-        const newUser = await UserModel.create({ name, email, password })
+        const newUser = await prisma.user.create({ data: { name, email, password } })
 
         res.status(201).json(newUser)
     }
