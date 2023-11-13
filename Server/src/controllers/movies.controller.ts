@@ -15,7 +15,20 @@ export const getAllMovies = async (req: Request, res: Response) => {
     }
 
 }
+export const getMovieById = async (req: Request, res: Response) => {
 
+    const { movieId } = req.params
+
+    try {
+        const user = await MovieModel.findById({ _id: movieId })
+
+        res.status(200).json(user)
+    }
+    catch (error) {
+
+        res.status(500).json(error)
+    }
+}
 
 export const createMovie = async (req: Request, res: Response) => {
 
@@ -23,6 +36,7 @@ export const createMovie = async (req: Request, res: Response) => {
     const { userId } = req.params
 
     try {
+        if (!name || !score || !posterImage) throw new Error("Missing fields")
         const movie = await MovieModel.create({ name, score, posterImage, genre, userId })
 
         await UserModel.findByIdAndUpdate(
@@ -37,7 +51,35 @@ export const createMovie = async (req: Request, res: Response) => {
     }
 }
 
+export const updateMovie = async (req: Request, res: Response) => {
+
+    const { movieId } = req.params
+    const { name, score, posterImage, genre } = req.body
+
+    try {
+        const movie = await UserModel.findByIdAndUpdate({ _id: movieId }, { $set: { name: name, score: score, posterImage: posterImage, genre: genre } }, { new: true })
+
+        res.status(201).json(movie)
+    }
+    catch (error) {
+
+        res.status(500).json(error)
+    }
+
+}
+
 export const deleteMovie = async (req: Request, res: Response) => {
-    const { userId } = req.params
+
+    const { movieId } = req.params
+
+    try {
+        const user = await MovieModel.findByIdAndDelete({ _id: movieId })
+
+        res.status(200).json(user)
+    }
+    catch (error) {
+
+        res.status(500).json(error)
+    }
 
 }
