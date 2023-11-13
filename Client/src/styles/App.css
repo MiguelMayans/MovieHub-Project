@@ -1,8 +1,19 @@
 @import "./reset.css";
+@import url('https://fonts.googleapis.com/css2?family=Passion+One&display=swap');
 
 #root {
-  max-width: 1280px;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  font-family: 'Passion One', sans-serif;
+
+  background-color: var(--main-bg-color);
+
+  --main-bg-color: #ECBE13;
+  --main-text-color: #fff;
+  --secondary-text-color: #999999;
+
+
+
+
 }

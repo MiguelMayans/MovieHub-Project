@@ -1,0 +1,18 @@
+.tittle {
+    font-weight: bold;
+}
+
+button {
+    margin-top: 3rem;
+    display: block;
+    appearance: none;
+    border-radius: 4px;
+    background: black;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    font-size: 1.7rem;
+    border-radius: 20px;
+    margin: 0 auto;
+    width: 15rem;
+}

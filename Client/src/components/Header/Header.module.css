@@ -1,0 +1,12 @@
+.navbar {
+
+    min-height: 6rem;
+    display: flex;
+    background-color: black;
+    color: white;
+}
+
+.welcome {
+    padding: 2rem;
+    font-size: 2rem;
+}

@@ -1,10 +1,15 @@
-import React from 'react'
+import NavBar from "../NavBar/NavBar"
+import styles from "./Header.module.css"
 
 type Props = {}
 
 const Header = (props: Props) => {
     return (
-        <div>Header</div>
+        <header className={styles.navbar}>
+            <p className={styles.welcome}>Welcome back, User</p>
+            <h2>IMMMDB</h2>
+            <NavBar />
+        </header>
     )
 }
 

@@ -19,7 +19,7 @@ export const createUser = async (req: Request, res: Response) => {
 
         res.status(500).json(error)
     }
-    res.status(200).send("User created")
+    // res.status(200).send("User created")
 }
 
 export const getUserById = async (req: Request, res: Response) => {
@@ -52,7 +52,7 @@ export const updateUser = async (req: Request, res: Response) => {
         res.status(500).json(error)
     }
 
-    res.status(200).send("User updated")
+    // res.status(200).send("User updated")
 }
 
 export const deleteUser = (req: Request, res: Response) => {

@@ -5,9 +5,9 @@ export interface IMovieDocument extends Document {
     name: string,
     posterImage: string,
     score: number,
-    // genre: IGenreDocument,
-    createdAt: Date,
-    updatedAt: Date
+    genre?: string[]
+    createdAt?: Date,
+    updatedAt?: Date
 }
 
 const MovieSchema = new Schema<IMovieDocument>(
@@ -15,6 +15,7 @@ const MovieSchema = new Schema<IMovieDocument>(
         name: { type: String, required: true },
         posterImage: { type: String, required: true, unique: true },
         score: { type: Number, min: 0, max: 10 },
+        genre: [{ type: String, ref: "Genre" }]
     }, { timestamps: true, versionKey: false }
 )
 
