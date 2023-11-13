@@ -1,9 +1,8 @@
 import { Schema, model } from "mongoose";
-import MovieModel, { IMovieDocument } from "./movies.model";
 
 export interface IGenreDocument extends Document {
     name: string,
-    movie: string[]
+    movie?: string[]
     createdAt?: Date,
     updatedAt?: Date
 }

@@ -1,5 +1,4 @@
 import { Schema, model, Document } from "mongoose";
-import MovieModel from "./movies.model";
 
 interface IUserDocument extends Document {
     name: string,

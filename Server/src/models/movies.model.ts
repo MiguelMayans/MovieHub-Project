@@ -1,5 +1,4 @@
 import { Schema, model, Document } from "mongoose";
-import GenreModel, { IGenreDocument } from "./genre.model";
 
 export interface IMovieDocument extends Document {
     name: string,

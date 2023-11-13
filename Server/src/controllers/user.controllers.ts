@@ -4,7 +4,7 @@ import UserModel from "../models/user.model"
 export const getAllUsers = async (req: Request, res: Response) => {
 
     try {
-        const allUsers = await UserModel.find().populate("movies")
+        const allUsers = await UserModel.find().populate({ path: "movies", populate: { path: "genre" } })
 
         res.status(200).json(allUsers)
 
@@ -36,7 +36,7 @@ export const getUserById = async (req: Request, res: Response) => {
     const { userId } = req.params
 
     try {
-        const user = await UserModel.findById({ _id: userId }).populate("movies")
+        const user = await UserModel.findById({ _id: userId }).populate({ path: "movies", populate: { path: "genre" } })
 
         res.status(200).json(user)
     }
@@ -70,7 +70,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     try {
         const user = await UserModel.findByIdAndDelete({ _id: userId })
 
-        res.status(201).json(user)
+        res.status(200).json(user)
     }
     catch (error) {
 
