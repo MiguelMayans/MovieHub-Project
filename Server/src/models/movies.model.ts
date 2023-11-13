@@ -15,7 +15,7 @@ const MovieSchema = new Schema<IMovieDocument>(
         name: { type: String, required: true },
         posterImage: { type: String, required: true, unique: true },
         score: { type: Number, min: 0, max: 10 },
-        genre: [{ type: String, ref: "Genre" }]
+        genre: [{ type: Schema.Types.ObjectId, ref: "Genre" }]
     }, { timestamps: true, versionKey: false }
 )
 

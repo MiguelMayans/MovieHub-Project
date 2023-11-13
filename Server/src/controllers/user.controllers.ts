@@ -1,8 +1,18 @@
 import { Request, Response } from "express"
 import UserModel from "../models/user.model"
 
-export const getAllUsers = (req: Request, res: Response) => {
-    res.status(200).send("Get All Users")
+export const getAllUsers = async (req: Request, res: Response) => {
+
+    try {
+        const allUsers = await UserModel.find().populate("movies")
+
+        res.status(200).json(allUsers)
+
+    } catch (error) {
+
+        res.status(500).json(error)
+    }
+
 }
 
 export const createUser = async (req: Request, res: Response) => {
@@ -19,7 +29,6 @@ export const createUser = async (req: Request, res: Response) => {
 
         res.status(500).json(error)
     }
-    // res.status(200).send("User created")
 }
 
 export const getUserById = async (req: Request, res: Response) => {
@@ -52,9 +61,20 @@ export const updateUser = async (req: Request, res: Response) => {
         res.status(500).json(error)
     }
 
-    // res.status(200).send("User updated")
 }
 
-export const deleteUser = (req: Request, res: Response) => {
-    res.status(200).send("User deleted")
+export const deleteUser = async (req: Request, res: Response) => {
+
+    const { userId } = req.params
+
+    try {
+        const user = await UserModel.findByIdAndDelete({ _id: userId })
+
+        res.status(201).json(user)
+    }
+    catch (error) {
+
+        res.status(500).json(error)
+    }
+
 }
