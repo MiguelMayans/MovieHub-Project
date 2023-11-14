@@ -1,11 +1,10 @@
 import { Request, Response } from "express"
-import UserModel from "../models/user.model"
-import prisma from "../db/client"
+import { prismaClient } from "../db/client"
 
 export const getAllUsers = async (req: Request, res: Response) => {
 
     try {
-        const allUsers = await UserModel.find().populate({ path: "movies", populate: { path: "genre" } })
+        const allUsers = await prismaClient.user.findMany({ include: { movies: { include: { genre: true } } } })
 
         res.status(200).json(allUsers)
 
@@ -22,7 +21,7 @@ export const createUser = async (req: Request, res: Response) => {
 
     try {
         if (!name || !email || !password) throw new Error("Missing fields")
-        const newUser = await prisma.user.create({ data: { name, email, password } })
+        const newUser = await prismaClient.user.create({ data: { name, email, password } })
 
         res.status(201).json(newUser)
     }
@@ -37,7 +36,7 @@ export const getUserById = async (req: Request, res: Response) => {
     const { userId } = req.params
 
     try {
-        const user = await UserModel.findById({ _id: userId }).populate({ path: "movies", populate: { path: "genre" } })
+        const user = await prismaClient.user.findUnique({ where: { id: userId }, include: { movies: { include: { genre: true } } } })
 
         res.status(200).json(user)
     }
@@ -53,7 +52,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const { name, email } = req.body
 
     try {
-        const user = await UserModel.findByIdAndUpdate({ _id: userId }, { $set: { name: name, email: email } }, { new: true })
+        const user = await prismaClient.user.update({ where: { id: userId }, data: { name: name, email: email } })
 
         res.status(201).json(user)
     }
@@ -69,9 +68,9 @@ export const deleteUser = async (req: Request, res: Response) => {
     const { userId } = req.params
 
     try {
-        const user = await UserModel.findByIdAndDelete({ _id: userId })
+        const user = await prismaClient.user.delete({ where: { id: userId } })
 
-        res.status(200).json(user)
+        res.status(204).json(user)
     }
     catch (error) {
 

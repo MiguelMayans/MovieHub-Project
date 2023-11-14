@@ -1,11 +1,11 @@
-import MovieModel from "../models/movies.model";
-import UserModel from "../models/user.model";
+
 import { Request, Response } from "express"
+import { prismaClient } from "../db/client";
 
 export const getAllMovies = async (req: Request, res: Response) => {
 
     try {
-        const allMovies = await MovieModel.find()
+        const allMovies = await prismaClient.movies.findMany({ include: { genre: true } })
 
         res.status(200).json(allMovies)
 
@@ -20,9 +20,9 @@ export const getMovieById = async (req: Request, res: Response) => {
     const { movieId } = req.params
 
     try {
-        const user = await MovieModel.findById({ _id: movieId })
+        const movie = await prismaClient.movies.findUnique({ where: { id: movieId } })
 
-        res.status(200).json(user)
+        res.status(200).json(movie)
     }
     catch (error) {
 
@@ -37,12 +37,7 @@ export const createMovie = async (req: Request, res: Response) => {
 
     try {
         if (!name || !score || !posterImage) throw new Error("Missing fields")
-        const movie = await MovieModel.create({ name, score, posterImage, genre, userId })
-
-        await UserModel.findByIdAndUpdate(
-            { _id: userId },
-            { $push: { movies: movie._id } }
-        )
+        const movie = await prismaClient.movies.create({ data: { name, score, posterImage, genre: { create: [{ genre: { create: { name: genre } } }] }, User: { connect: { id: userId } } } })
 
         res.status(201).json(movie)
 
@@ -56,8 +51,9 @@ export const updateMovie = async (req: Request, res: Response) => {
     const { movieId } = req.params
     const { name, score, posterImage, genre } = req.body
 
+
     try {
-        const movie = await UserModel.findByIdAndUpdate({ _id: movieId }, { $set: { name: name, score: score, posterImage: posterImage, genre: genre } }, { new: true })
+        const movie = await prismaClient.movies.update({ where: { id: movieId }, data: { name: name, score: score, posterImage: posterImage, genre: genre } })
 
         res.status(201).json(movie)
     }
@@ -73,9 +69,9 @@ export const deleteMovie = async (req: Request, res: Response) => {
     const { movieId } = req.params
 
     try {
-        const user = await MovieModel.findByIdAndDelete({ _id: movieId })
+        const movie = await prismaClient.movies.delete({ where: { id: movieId } })
 
-        res.status(200).json(user)
+        res.status(204).json(movie)
     }
     catch (error) {
 

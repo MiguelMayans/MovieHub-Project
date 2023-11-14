@@ -1,20 +1,33 @@
-import GenreModel from "../models/genre.model"
 import { Request, Response } from "express"
-import MovieModel from "../models/movies.model"
+import { prismaClient } from "../db/client"
 
 export const createGenre = async (req: Request, res: Response) => {
 
-    const { name } = req.body
+    const { name, movies } = req.body
     const { movieId } = req.params
 
     try {
         if (!name) throw new Error("Missing fields")
 
-        const genre = await GenreModel.create({ name, movie: movieId })
+        const genre = await prismaClient.genre.create({ data: { name, movies } })
 
-        await MovieModel.findByIdAndUpdate({ _id: movieId }, { $push: { genre: genre._id } })
 
         res.status(201).json(genre)
+    }
+    catch (error) {
+
+        res.status(500).json(error)
+    }
+}
+
+export const getGenreById = async (req: Request, res: Response) => {
+
+    const { genreId } = req.params
+
+    try {
+        const genre = await prismaClient.genre.findUnique({ where: { id: genreId } })
+
+        res.status(200).json(genre)
     }
     catch (error) {
 
@@ -27,9 +40,9 @@ export const deleteGenre = async (req: Request, res: Response) => {
     const { genreId } = req.params
 
     try {
-        const genre = await MovieModel.findByIdAndDelete({ _id: genreId })
+        const genre = await prismaClient.genre.delete({ where: { id: genreId } })
 
-        res.status(200).json(genre)
+        res.status(204).json(genre)
     }
     catch (error) {
 
@@ -37,3 +50,5 @@ export const deleteGenre = async (req: Request, res: Response) => {
     }
 
 }
+
+// : { create: [{ movies: { create: { name: movie } } }] }
