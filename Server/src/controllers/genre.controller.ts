@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { prismaClient } from "../db/client"
+import { converToType } from "../helpers/utils"
 
 export const createGenre = async (req: Request, res: Response) => {
 
@@ -25,7 +26,7 @@ export const getGenreById = async (req: Request, res: Response) => {
     const { genreId } = req.params
 
     try {
-        const genre = await prismaClient.genre.findUnique({ where: { id: genreId } })
+        const genre = await prismaClient.genre.findUnique({ where: { id: converToType(genreId) } })
 
         res.status(200).json(genre)
     }
@@ -40,7 +41,7 @@ export const deleteGenre = async (req: Request, res: Response) => {
     const { genreId } = req.params
 
     try {
-        const genre = await prismaClient.genre.delete({ where: { id: genreId } })
+        const genre = await prismaClient.genre.delete({ where: { id: converToType(genreId) } })
 
         res.status(204).json(genre)
     }

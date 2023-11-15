@@ -1,4 +1,4 @@
-
+import { converToType } from "../helpers/utils"
 import { Request, Response } from "express"
 import { prismaClient } from "../db/client";
 
@@ -20,7 +20,7 @@ export const getMovieById = async (req: Request, res: Response) => {
     const { movieId } = req.params
 
     try {
-        const movie = await prismaClient.movies.findUnique({ where: { id: movieId } })
+        const movie = await prismaClient.movies.findUnique({ where: { id: converToType(movieId) } })
 
         res.status(200).json(movie)
     }
@@ -37,7 +37,7 @@ export const createMovie = async (req: Request, res: Response) => {
 
     try {
         if (!name || !score || !posterImage) throw new Error("Missing fields")
-        const movie = await prismaClient.movies.create({ data: { name, score, posterImage, genre: { create: [{ genre: { create: { name: genre } } }] }, User: { connect: { id: userId } } } })
+        const movie = await prismaClient.movies.create({ data: { name, score, posterImage, genre: { create: [{ genre: { create: { name: genre } } }] }, User: { connect: { id: converToType(userId) } } } })
 
         res.status(201).json(movie)
 
@@ -53,7 +53,7 @@ export const updateMovie = async (req: Request, res: Response) => {
 
 
     try {
-        const movie = await prismaClient.movies.update({ where: { id: movieId }, data: { name: name, score: score, posterImage: posterImage, genre: genre } })
+        const movie = await prismaClient.movies.update({ where: { id: converToType(movieId) }, data: { name: name, score: score, posterImage: posterImage, genre: genre } })
 
         res.status(201).json(movie)
     }
@@ -69,7 +69,7 @@ export const deleteMovie = async (req: Request, res: Response) => {
     const { movieId } = req.params
 
     try {
-        const movie = await prismaClient.movies.delete({ where: { id: movieId } })
+        const movie = await prismaClient.movies.delete({ where: { id: converToType(movieId) } })
 
         res.status(204).json(movie)
     }

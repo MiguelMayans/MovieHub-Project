@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { prismaClient } from "../db/client"
+import { converToType } from "../helpers/utils"
 
 export const getAllUsers = async (req: Request, res: Response) => {
 
@@ -36,7 +37,7 @@ export const getUserById = async (req: Request, res: Response) => {
     const { userId } = req.params
 
     try {
-        const user = await prismaClient.user.findUnique({ where: { id: userId }, include: { movies: { include: { genre: true } } } })
+        const user = await prismaClient.user.findUnique({ where: { id: converToType(userId) }, include: { movies: { include: { genre: true } } } })
 
         res.status(200).json(user)
     }
@@ -52,7 +53,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const { name, email } = req.body
 
     try {
-        const user = await prismaClient.user.update({ where: { id: userId }, data: { name: name, email: email } })
+        const user = await prismaClient.user.update({ where: { id: converToType(userId) }, data: { name: name, email: email } })
 
         res.status(201).json(user)
     }
@@ -68,7 +69,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     const { userId } = req.params
 
     try {
-        const user = await prismaClient.user.delete({ where: { id: userId } })
+        const user = await prismaClient.user.delete({ where: { id: converToType(userId) } })
 
         res.status(204).json(user)
     }
