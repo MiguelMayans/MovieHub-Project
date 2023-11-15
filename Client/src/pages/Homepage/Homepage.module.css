@@ -2,9 +2,12 @@
     font-weight: bold;
 }
 
-button {
+.btn_container {
     margin-top: 3rem;
-    display: block;
+}
+
+button {
+    cursor: pointer;
     appearance: none;
     border-radius: 4px;
     background: black;

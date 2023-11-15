@@ -4,9 +4,14 @@
     display: flex;
     background-color: black;
     color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 7rem;
+    padding-left: 7rem;
 }
 
 .welcome {
     padding: 2rem;
     font-size: 2rem;
+
 }

@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Landing.module.css"
 import { useForm, SubmitHandler } from 'react-hook-form';
-import SingIn from "../SignIn/SignIn";
+
 
 
 type Props = {}
@@ -32,8 +32,9 @@ const Landing = (props: Props) => {
                     <input type="text" placeholder="Example123" {...register("user", { required: true, max: 20, min: 4 })} />
                     <p className={styles.form__name}>Password</p>
                     <input type="password" placeholder="********" {...register("password", { required: true, max: 30, min: 6 })} />
-
-                    <input type="submit" value="Log In" />
+                    <NavLink to={"/homepage"}>
+                        <input type="submit" value="Log In" />
+                    </NavLink>
                 </form>
                 <article className={styles.signin}>
                     <p>Don't have an account? <NavLink to={"/SignIn"}>Sign In</NavLink></p>

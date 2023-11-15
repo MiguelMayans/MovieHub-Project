@@ -49,6 +49,7 @@ input[type="submit"] {
     margin: 0 auto;
     width: 14rem;
     margin-top: 2rem;
+    cursor: pointer;
 
 }
 
@@ -59,23 +60,9 @@ button {
     width: 100%;
 }
 
-input[type="submit"]:hover {
-    background: white;
-    color: black;
-}
-
 
 input:disabled {
     opacity: 0.4;
-}
-
-input[type="button"]:hover {
-    transition: 0.3s all;
-}
-
-input[type="button"],
-input[type="submit"] {
-    -webkit-appearance: none;
 }
 
 .form__name {
@@ -88,8 +75,4 @@ input[type="submit"] {
 .signin {
     padding: 2rem;
     font-size: 1.5rem;
-}
-
-a {
-    text-decoration: underline;
 }
