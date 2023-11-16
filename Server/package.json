@@ -27,6 +27,7 @@
     "@prisma/client": "^5.5.2",
     "@types/jsonwebtoken": "^9.0.4",
     "express": "^4.18.2",
+    "express-oauth2-jwt-bearer": "^1.6.0",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",

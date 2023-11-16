@@ -7,6 +7,7 @@ type TConfig = {
 type EnviromentConfig = {
     app: AppConfig
     db: MongoDBConfig
+    auth0?: AUTH0
 }
 
 type MongoDBConfig = {
@@ -15,6 +16,12 @@ type MongoDBConfig = {
 
 type AppConfig = {
     PORT: string | number
+}
+
+type AUTH0 = {
+    client_origin: string | undefined
+    audience: string | undefined
+    issuer: string | undefined
 }
 
 if (process.env.NODE_ENV === "production") {
@@ -36,6 +43,11 @@ const CONFIG: TConfig = {
         db: {
             URI:
                 process.env.MONGO_DB_URI || "mongodb://localhost:27017/test_development"
+        },
+        auth0: {
+            client_origin: process.env.CLIENT_ORIGIN,
+            audience: process.env.AUTH0_AUDIENCE,
+            issuer: process.env.AUTH0_ISSUER
         }
     },
     production: {

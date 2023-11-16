@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import styles from "./NavBar.module.css"
+import Logout from '../Logout/Logout'
 
 type Props = {}
 
@@ -10,9 +11,7 @@ const NavBar = (props: Props) => {
                 <li>
                     <NavLink to={"/Profile"}>Profile</NavLink>
                 </li>
-                <li>
-                    <NavLink to={"/"}>Log Out</NavLink>
-                </li>
+                <Logout />
             </ul>
         </header>
     )

@@ -15,7 +15,6 @@ type FormValues = {
 }
 
 
-
 const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
