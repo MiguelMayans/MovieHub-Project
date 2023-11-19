@@ -4,6 +4,7 @@ import styles from "./AddMovieModal.module.css"
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useUserContext } from '../../pages/Homepage/Homepage';
 import { createNewMovie } from '../../services/request.service';
+import { useAuth0 } from '@auth0/auth0-react';
 
 type AddMovieModalProps = {
     isOpen: boolean;
@@ -28,6 +29,9 @@ const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
     };
     const [isModalOpen, setIsModalOpen] = useState(isOpen);
 
+    const { getAccessTokenSilently } = useAuth0()
+
+
 
     const { register, handleSubmit, reset, formState } = useForm<FormValues>();
     const { errors, isSubmitSuccessful } = formState;
@@ -39,7 +43,7 @@ const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
         const userId = currentUser?.id
 
-        if (userId) await createNewMovie(userId, data)
+        if (userId) await createNewMovie(userId, data, getAccessTokenSilently)
         console.log("data:", data)
 
     }

@@ -18,7 +18,7 @@ app.use(morgan("tiny"))
 
 
 app.use("/user", userRoutes)
-app.use("/movies", moviesRoutes)
+app.use("/movies", checkJwtMiddleware, moviesRoutes)
 app.use("/genre", checkJwtMiddleware, genreRoutes)
 
 app.use(errorHandler)

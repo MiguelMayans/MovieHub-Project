@@ -1,4 +1,4 @@
-import { Navigate, redirect, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useUserContext } from "../../pages/Homepage/Homepage"
 import styles from "./MovieDetailModal.module.css"
 import { deleteMovie } from "../../services/request.service"
@@ -7,16 +7,11 @@ import EditMovieModal from "../EditMovieModal/EditMovieModal"
 import { useState } from "react"
 
 
-
-type Props = {
-
-}
-
 const MovieDetailModal = () => {
 
-    const { user } = useAuth0()
+    const { getAccessTokenSilently } = useAuth0()
 
-    const { setCurrentLoggedUser, currentUser } = useUserContext()
+    const { currentUser } = useUserContext()
 
     const { name: nameParam } = useParams()
 
@@ -28,7 +23,7 @@ const MovieDetailModal = () => {
 
     const navigate = useNavigate()
 
-    const { name, posterImage, score, genre } = movieDetail
+    const { name, posterImage, score } = movieDetail
 
     const handleDeleteMovie = () => {
 
@@ -37,7 +32,7 @@ const MovieDetailModal = () => {
             return
         }
 
-        deleteMovie(currentUser.id, movieDetail.id)
+        deleteMovie(currentUser.id, movieDetail.id, getAccessTokenSilently)
         navigate("/homepage")
         location.reload()
     }
@@ -51,7 +46,6 @@ const MovieDetailModal = () => {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-
 
     return (
         <>

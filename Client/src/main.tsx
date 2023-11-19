@@ -8,6 +8,7 @@ const { VITE_AUTH_DOMAIN: domain, VITE_AUTH_CLIENT_ID: clientId, VITE_AUTH_AUDIE
 const redirectUri = window.location.origin + "/homepage"
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+
   <UserContextProvider>
     <Auth0Provider
       domain={domain}
@@ -21,7 +22,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </BrowserRouter>
     </Auth0Provider>
   </UserContextProvider>
-
-
 
 )

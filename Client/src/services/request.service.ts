@@ -1,4 +1,3 @@
-import { User } from "@auth0/auth0-react";
 
 export const publicRequest = async () => {
     const { VITE_API_URL } = import.meta.env
@@ -23,8 +22,6 @@ export const protectedRequest = async (getToken: any) => {
 
 
 export const getAllUsers = async () => {
-
-    // const token = await getToken()
 
     const response = await fetch("http://localhost:8080/user", {
         method: "GET",
@@ -78,13 +75,17 @@ export const createNewUser = async (userObject: {}) => {
 }
 
 
-export const createNewMovie = async (userId: number, data: any) => {
+export const createNewMovie = async (userId: number, data: any, getToken: any) => {
+
+    const token = await getToken()
+
 
     try {
         const response = await fetch(`http://localhost:8080/movies/${userId}`, {
             method: "POST",
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                authorization: `Bearer ${token}`
 
             },
             body: JSON.stringify({
@@ -102,11 +103,16 @@ export const createNewMovie = async (userId: number, data: any) => {
     }
 }
 
-export const deleteMovie = async (userId: number, movieId: number) => {
+export const deleteMovie = async (userId: number, movieId: number, getToken: any) => {
+
+    const token = await getToken()
 
     const response = await fetch(`http://localhost:8080/movies/${userId}/${movieId}`,
         {
             method: "DELETE",
+            headers: {
+                authorization: `Bearer ${token}`
+            }
 
         })
 
@@ -116,13 +122,16 @@ export const deleteMovie = async (userId: number, movieId: number) => {
 }
 
 
-export const updateMovie = async (userId: number, movieId: number, data: any) => {
+export const updateMovie = async (userId: number, movieId: number, data: any, getToken: any) => {
+
+    const token = await getToken()
 
     try {
         const response = await fetch(`http://localhost:8080/movies/${userId}/${movieId}`, {
             method: "PATCH",
             headers: {
-                "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8",
+                authorization: `Bearer ${token}`
 
             },
             body: JSON.stringify({
@@ -139,4 +148,3 @@ export const updateMovie = async (userId: number, movieId: number, data: any) =>
         return null;
     }
 }
-// Cuando onClick => protectedRequest(GetAcessTokenSilenty) que nos lo importtamos de Auth0

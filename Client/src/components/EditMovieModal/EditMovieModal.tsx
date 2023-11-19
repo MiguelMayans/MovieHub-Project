@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useUserContext } from '../../pages/Homepage/Homepage';
 import { updateMovie } from '../../services/request.service';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { useAuth0 } from '@auth0/auth0-react';
 
 type AddMovieModalProps = {
     isOpen: boolean;
@@ -22,22 +22,25 @@ type FormValues = {
 
 const EditMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
+    const { getAccessTokenSilently } = useAuth0()
+
+    const [isModalOpen, setIsModalOpen] = useState(isOpen);
+
+    const { currentUser } = useUserContext()
+
+    const { name: nameParam } = useParams()
+
     const handleCloseModal = () => {
         if (onClose) {
             onClose();
         }
         setIsModalOpen(false);
     };
-    const [isModalOpen, setIsModalOpen] = useState(isOpen);
 
 
     const { register, handleSubmit, reset, formState } = useForm<FormValues>();
     const { errors, isSubmitSuccessful } = formState;
     console.log(errors);
-
-    const { currentUser } = useUserContext()
-
-    const { name: nameParam } = useParams()
 
     const movieDetail = currentUser ? currentUser?.movies.find((movie) => {
         return movie.name === nameParam
@@ -49,9 +52,8 @@ const EditMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
         const userId = currentUser?.id
 
-        if (userId) await updateMovie(userId, movieDetail.id, data)
+        if (userId) await updateMovie(userId, movieDetail.id, data, getAccessTokenSilently)
         console.log("data:", data)
-
     }
 
     const navigate = useNavigate()
@@ -66,6 +68,7 @@ const EditMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
     return (
         <Modal hasCloseBtn={true} isOpen={isOpen} onClose={onClose}>
+
             <main className={styles.modalWrapper}>
                 <article>
                     <div className={styles.emptyMovieCard}>
@@ -75,15 +78,19 @@ const EditMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
                         <p>Add Poster Image</p>
                     </div>
                 </article>
+
                 <article className={styles.form}>
                     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+
                         <p className={styles.form__text}>Name</p>
                         <input type="text" placeholder="Example123" {...register("name", { required: true, max: 30, min: 1 })} />
 
                         <p className={styles.form__text}>Score</p>
                         <input type="string" placeholder="0 to 10" {...register("score", { required: true, max: 10, min: 0 })} />
+
                         <p className={styles.form__text}>Genre</p>
                         <input type="text" placeholder="Action" {...register("genre", { required: true, max: 30 })} />
+
                         <p className={styles.form__text}>Image</p>
                         <input type="text" placeholder="imageUrl" {...register("posterImage", { required: false })} />
 

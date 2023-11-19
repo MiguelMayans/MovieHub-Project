@@ -15,6 +15,7 @@ const Profile = (props: Props) => {
             <main>
                 <section className={styles.profile}>
                     <h2 className={styles.tittle}>My Profile</h2>
+                    <img className={styles.img} src={user?.picture} alt={user?.picture} />
                     <article className={styles.data__wrapper}>
                         <section className={styles.data__tittle}>
                             <h4>User</h4>

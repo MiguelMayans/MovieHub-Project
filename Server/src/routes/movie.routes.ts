@@ -5,7 +5,6 @@ const moviesRoutes = Router()
 
 moviesRoutes.get("/:userId", getAllMovies)
 
-
 moviesRoutes.post("/:userId", createMovie)
 
 moviesRoutes.patch("/:userId/:movieId", updateMovie)

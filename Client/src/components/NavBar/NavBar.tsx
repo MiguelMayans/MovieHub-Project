@@ -2,9 +2,7 @@ import { NavLink } from 'react-router-dom'
 import styles from "./NavBar.module.css"
 import Logout from '../Logout/Logout'
 
-type Props = {}
-
-const NavBar = (props: Props) => {
+const NavBar = () => {
     return (
         <header>
             <ul className={styles.nav}>

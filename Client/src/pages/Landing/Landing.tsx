@@ -1,21 +1,9 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Landing.module.css"
-import { useForm, SubmitHandler } from 'react-hook-form';
 import LoginButton from "../../components/LoginButton/LoginButton";
 
 
-type Props = {}
-
-// type FormValues = {
-//     user: string
-//     password: string
-// }
-
-const Landing = (props: Props) => {
-
-    // const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
-    // const onSubmit: SubmitHandler<FormValues> = (data) => console.log(data)
-    // console.log(errors);
+const Landing = () => {
 
     return (
         <>
@@ -26,12 +14,12 @@ const Landing = (props: Props) => {
                 </section>
             </header>
 
-            <body>
+            <main>
                 <LoginButton />
                 <article className={styles.signin}>
                     <p>Don't have an account? <NavLink to={"/SignIn"}>Sign In</NavLink></p>
                 </article>
-            </body>
+            </main>
 
         </>
     )

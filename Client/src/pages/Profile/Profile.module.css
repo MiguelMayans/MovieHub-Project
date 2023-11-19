@@ -7,7 +7,7 @@
     margin: 0 auto;
     margin-top: 3rem;
     width: 1000px;
-    height: 600px;
+    height: 640px;
     background-color: white;
     border: 8px solid black;
     flex-direction: column;
@@ -44,4 +44,11 @@
 
 h4 {
     padding: 0.5rem 0 0.5rem 0;
+}
+
+.img {
+    margin: 0 auto;
+    width: 60px;
+    border-radius: 50%;
+
 }
