@@ -1,14 +1,13 @@
 import { Router } from "express";
 import { createGenre, deleteGenre, getGenreById } from "../controllers/genre.controller";
-import { checkJwtMiddleware } from "../middleware/checkJwt.middleware";
 
 const genreRoutes = Router()
 
-genreRoutes.post("/:userId/:movieId", checkJwtMiddleware, createGenre)
+genreRoutes.post("/:userId/:movieId", createGenre)
 
-genreRoutes.get("/:userId/:movieId/:genreId", checkJwtMiddleware, getGenreById)
+genreRoutes.get("/:userId/:movieId/:genreId", getGenreById)
 
-genreRoutes.delete("/:userId/:movieId/:genreId", checkJwtMiddleware, deleteGenre)
+genreRoutes.delete("/:userId/:movieId/:genreId", deleteGenre)
 
 
 export default genreRoutes

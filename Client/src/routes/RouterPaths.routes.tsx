@@ -4,6 +4,7 @@ import Homepage from '../pages/Homepage/Homepage'
 import Profile from '../pages/Profile/Profile'
 import SignIn from '../pages/SignIn/SignIn'
 import PrivateRoutes from './PrivateRoutes.routes'
+import MovieDetailModal from '../components/MovieDetailModal/MovieDetailModal'
 
 
 export const RouterPaths = () => {
@@ -18,6 +19,7 @@ export const RouterPaths = () => {
                 <PrivateRoutes>
                     <Routes>
                         <Route path='/homepage' element={<Homepage />} />
+                        <Route path='/homepage/:name' element={<MovieDetailModal />} />
                         <Route path='/profile' element={<Profile />} />
                     </Routes>
                 </PrivateRoutes>}>

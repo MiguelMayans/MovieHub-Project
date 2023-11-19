@@ -36,7 +36,7 @@ export const createMovie = async (req: Request, res: Response) => {
     const { userId } = req.params
 
     try {
-        if (!name || !score || !posterImage) throw new Error("Missing fields")
+        if (!name || !score) throw new Error("Missing fields")
         const movie = await prismaClient.movies.create({ data: { name, score, posterImage, genre: { create: [{ genre: { create: { name: genre } } }] }, User: { connect: { id: converToType(userId) } } } })
 
         res.status(201).json(movie)
@@ -53,7 +53,7 @@ export const updateMovie = async (req: Request, res: Response) => {
 
 
     try {
-        const movie = await prismaClient.movies.update({ where: { id: converToType(movieId) }, data: { name: name, score: score, posterImage: posterImage, genre: genre } })
+        const movie = await prismaClient.movies.update({ where: { id: converToType(movieId) }, data: { name: name, score: score, posterImage: posterImage, genre: { create: [{ genre: { create: { name: genre } } }] } } })
 
         res.status(201).json(movie)
     }

@@ -45,7 +45,7 @@ const CONFIG: TConfig = {
                 process.env.MONGO_DB_URI || "mongodb://localhost:27017/test_development"
         },
         auth0: {
-            client_origin: process.env.CLIENT_ORIGIN,
+            client_origin: process.env.APP_ORIGIN,
             audience: process.env.AUTH0_AUDIENCE,
             issuer: process.env.AUTH0_ISSUER
         }

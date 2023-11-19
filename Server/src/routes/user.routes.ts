@@ -1,15 +1,15 @@
 import { Router } from "express";
 
-import { createUser, deleteUser, getAllUsers, updateUser, getUserById } from "../controllers/user.controllers";
+import { createUser, deleteUser, getAllUsers, updateUser, getUserByEmail } from "../controllers/user.controllers";
 import { checkJwtMiddleware } from "../middleware/checkJwt.middleware";
 
 const userRoutes = Router()
 
-userRoutes.get("/", checkJwtMiddleware, getAllUsers)
-
-userRoutes.get("/:userId", checkJwtMiddleware, getUserById)
+userRoutes.get("/", getAllUsers)
 
 userRoutes.post("/", createUser)
+
+userRoutes.get("/:userEmail", getUserByEmail)
 
 userRoutes.patch("/:userId", checkJwtMiddleware, updateUser)
 

@@ -1,12 +1,17 @@
 import AddMovieModal from "../AddMovieModal/AddMovieModal";
 import styles from "./MovieContainer.module.css"
 import { useState } from "react";
-
+import { FC } from "react";
+import { Movie } from "../../context/userContext";
+import { useUserContext } from "../../pages/Homepage/Homepage";
+import { NavLink } from "react-router-dom";
+import MovieDetailModal from "../MovieDetailModal/MovieDetailModal";
 type Props = {
 
 }
 
-const MovieContainer = (props: Props) => {
+
+const MovieContainer = () => {
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -19,43 +24,26 @@ const MovieContainer = (props: Props) => {
     };
 
 
+    const { setCurrentLoggedUser, currentUser } = useUserContext()
+    const movies = currentUser?.movies
+    console.log(movies)
+
     return (
         <main className={styles.container}>
-            <div className={styles.movieCard}>
-                <span className={styles.poster__container}>
-                    <img className={styles.poster} src="./src/assets/img/Interstellar.jpg" alt="Interstellar Image" />
-                </span>
-                <h5 className={styles.tittle}>Interstellar</h5>
-                <h6 className={styles.genre}>Action, Sci-Fi, Adventure</h6>
-            </div>
-            <div className={styles.movieCard}>
-                <span className={styles.poster__container}>
-                    <img className={styles.poster} src="./src/assets/img/Drive.jpg" alt="Interstellar Image" />
-                </span>
-                <h5 className={styles.tittle}>Drive</h5>
-                <h6 className={styles.genre}>Action, Adventure</h6>
-            </div>
-            <div className={styles.movieCard}>
-                <span className={styles.poster__container}>
-                    <img className={styles.poster} src="./src/assets/img/The_Batman.jpg" alt="Interstellar Image" />
-                </span>
-                <h5 className={styles.tittle}>The Batman</h5>
-                <h6 className={styles.genre}>Action, Hero</h6>
-            </div>
-            <div className={styles.movieCard}>
-                <span className={styles.poster__container}>
-                    <img className={styles.poster} src="./src/assets/img/Interstellar.jpg" alt="Interstellar Image" />
-                </span>
-                <h5 className={styles.tittle}>Interstellar</h5>
-                <h6 className={styles.genre}>Action, Sci-Fi</h6>
-            </div>
-            <div className={styles.movieCard}>
-                <span className={styles.poster__container}>
-                    <img className={styles.poster} src="./src/assets/img/Interstellar.jpg" alt="Interstellar Image" />
-                </span>
-                <h5 className={styles.tittle}>Interstellar</h5>
-                <h6 className={styles.genre}>Action, Sci-Fi</h6>
-            </div>
+
+            {movies?.map(movie =>
+                <li key={movie.id}>
+                    <NavLink to={`/homepage/${movie.name}`}>
+                        <div className={styles.movieCard}>
+                            <span className={styles.poster__container}>
+                                <img className={styles.poster} src={movie.posterImage} alt="Interstellar Image" />
+                            </span>
+                            <h5 className={styles.tittle}>{movie.name}</h5>
+                            <h6 className={styles.genre}>Genre</h6>
+                        </div>
+                    </NavLink>
+                </li>
+            )}
 
             <div className={styles.emptyMovieCard} onClick={handleOpenModal}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">

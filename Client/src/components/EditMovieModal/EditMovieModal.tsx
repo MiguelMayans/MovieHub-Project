@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, } from 'react'
 import Modal from '../Modal/Modal';
-import styles from "./AddMovieModal.module.css"
+import styles from "./EditMovieModal.module.css"
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useUserContext } from '../../pages/Homepage/Homepage';
-import { createNewMovie } from '../../services/request.service';
+import { updateMovie } from '../../services/request.service';
+import { useNavigate, useParams } from 'react-router-dom';
+
 
 type AddMovieModalProps = {
     isOpen: boolean;
@@ -18,7 +20,7 @@ type FormValues = {
 }
 
 
-const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
+const EditMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
     const handleCloseModal = () => {
         if (onClose) {
@@ -35,20 +37,30 @@ const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
     const { currentUser } = useUserContext()
 
+    const { name: nameParam } = useParams()
+
+    const movieDetail = currentUser ? currentUser?.movies.find((movie) => {
+        return movie.name === nameParam
+    }) : undefined
+
+    if (!movieDetail) return null
+
     const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
 
         const userId = currentUser?.id
 
-        if (userId) await createNewMovie(userId, data)
+        if (userId) await updateMovie(userId, movieDetail.id, data)
         console.log("data:", data)
 
     }
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (formState.isSubmitSuccessful) {
             reset({ name: "", score: "", posterImage: "", genre: "" })
             handleCloseModal()
-            location.reload()
+            navigate("/homepage")
         }
     }, [formState, reset])
 
@@ -75,7 +87,7 @@ const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
                         <p className={styles.form__text}>Image</p>
                         <input type="text" placeholder="imageUrl" {...register("posterImage", { required: false })} />
 
-                        <input type="submit" value="Add Movie" className={styles.addMovie__btn} />
+                        <input type="submit" value="Edit Movie" className={styles.addMovie__btn} />
                     </form>
                 </article>
             </main>
@@ -84,7 +96,7 @@ const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
     )
 }
 
-export default AddMovieModal
+export default EditMovieModal
 
 
 
