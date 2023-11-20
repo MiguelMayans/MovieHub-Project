@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { Request, Response } from "express"
-import { createUser, deleteUser, getAllUsers, updateUser } from "../controllers/user.controllers";
+
+import { createUser, deleteUser, getAllUsers, updateUser, getUserByEmail } from "../controllers/user.controllers";
+import { checkJwtMiddleware } from "../middleware/checkJwt.middleware";
 
 const userRoutes = Router()
 
@@ -8,8 +9,10 @@ userRoutes.get("/", getAllUsers)
 
 userRoutes.post("/", createUser)
 
-userRoutes.put("/:userId", updateUser)
+userRoutes.get("/:userEmail", getUserByEmail)
 
-userRoutes.delete("/:userId", deleteUser)
+userRoutes.patch("/:userId", checkJwtMiddleware, updateUser)
+
+userRoutes.delete("/:userId", checkJwtMiddleware, deleteUser)
 
 export default userRoutes

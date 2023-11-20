@@ -1,10 +1,16 @@
-import './App.css'
+import '../src/styles/App.css'
+import Footer from './components/Footer/Footer'
+import Header from './components/Header/Header'
+import { RouterPaths } from './routes/RouterPaths.routes'
 
 function App() {
 
   return (
     <>
-      <h1>Movie Hub Project</h1>
+      <Header />
+      <RouterPaths />
+      <Footer />
+
     </>
   )
 }
