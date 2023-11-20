@@ -51,5 +51,3 @@ export const deleteGenre = async (req: Request, res: Response) => {
     }
 
 }
-
-// : { create: [{ movies: { create: { name: movie } } }] }

@@ -8,7 +8,6 @@ const Profile = (props: Props) => {
 
     const { user, isAuthenticated, isLoading } = useAuth0()
 
-    console.log(user)
     return (
         isAuthenticated && (
 

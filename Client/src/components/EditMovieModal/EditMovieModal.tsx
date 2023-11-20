@@ -19,7 +19,6 @@ type FormValues = {
     posterImage: string
 }
 
-
 const EditMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
     const { getAccessTokenSilently } = useAuth0()
@@ -36,7 +35,6 @@ const EditMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
         }
         setIsModalOpen(false);
     };
-
 
     const { register, handleSubmit, reset, formState } = useForm<FormValues>();
     const { errors, isSubmitSuccessful } = formState;

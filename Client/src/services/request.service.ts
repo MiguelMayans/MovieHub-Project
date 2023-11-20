@@ -1,29 +1,8 @@
-
-export const publicRequest = async () => {
-    const { VITE_API_URL } = import.meta.env
-    const response = await fetch(`${VITE_API_URL}/user`)
-    const data = await response.json()
-    console.log("public request:", data)
-}
-
-export const protectedRequest = async (getToken: any) => {
-
-    const { VITE_API_URL } = import.meta.env
-    const token = getToken()
-    const response = await fetch(`${VITE_API_URL}/dondesea`, {
-        headers: {
-            authorization: `Bearer ${token}`
-        }
-    })
-    const data = await response.json()
-    console.log("protected data:", data)
-
-}
-
+const { VITE_API_URL } = import.meta.env
 
 export const getAllUsers = async () => {
 
-    const response = await fetch("http://localhost:8080/user", {
+    const response = await fetch(`${VITE_API_URL}/user`, {
         method: "GET",
         headers: {
 
@@ -40,7 +19,7 @@ export const getUserByEmail = async (email: string, getToken: any) => {
 
     const token = await getToken();
 
-    const response = await fetch(`http://localhost:8080/user/${email}`, {
+    const response = await fetch(`${VITE_API_URL}/user/${email}`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${token}`,
@@ -55,7 +34,7 @@ export const getUserByEmail = async (email: string, getToken: any) => {
 export const createNewUser = async (userObject: {}) => {
 
     try {
-        const response = await fetch(`http://localhost:8080/user/`, {
+        const response = await fetch(`${VITE_API_URL}/user`, {
 
             method: "POST",
             headers: {
@@ -71,17 +50,14 @@ export const createNewUser = async (userObject: {}) => {
         console.error('Error creating user:', error);
         return null;
     }
-
 }
-
 
 export const createNewMovie = async (userId: number, data: any, getToken: any) => {
 
     const token = await getToken()
 
-
     try {
-        const response = await fetch(`http://localhost:8080/movies/${userId}`, {
+        const response = await fetch(`${VITE_API_URL}/movies/${userId}`, {
             method: "POST",
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
@@ -107,7 +83,7 @@ export const deleteMovie = async (userId: number, movieId: number, getToken: any
 
     const token = await getToken()
 
-    const response = await fetch(`http://localhost:8080/movies/${userId}/${movieId}`,
+    const response = await fetch(`${VITE_API_URL}/movies/${userId}/${movieId}`,
         {
             method: "DELETE",
             headers: {
@@ -127,7 +103,7 @@ export const updateMovie = async (userId: number, movieId: number, data: any, ge
     const token = await getToken()
 
     try {
-        const response = await fetch(`http://localhost:8080/movies/${userId}/${movieId}`, {
+        const response = await fetch(`${VITE_API_URL}/movies/${userId}/${movieId}`, {
             method: "PATCH",
             headers: {
                 "Content-type": "application/json; charset=UTF-8",

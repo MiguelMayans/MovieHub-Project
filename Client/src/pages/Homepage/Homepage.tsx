@@ -26,7 +26,7 @@ const Homepage: React.FC = () => {
 
 
     const { setCurrentLoggedUser, currentUser } = useUserContext()
-    const { isAuthenticated, user, getAccessTokenSilently, isLoading } = useAuth0()
+    const { isAuthenticated, user, isLoading } = useAuth0()
 
     const findLoggedUser = async () => {
         if (user) {
@@ -58,7 +58,6 @@ const Homepage: React.FC = () => {
         return <div>Loading...</div>;
 
     }
-
 
     return (
         <>

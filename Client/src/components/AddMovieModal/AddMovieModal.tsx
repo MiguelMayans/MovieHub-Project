@@ -18,7 +18,6 @@ type FormValues = {
     posterImage: string
 }
 
-
 const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
     const handleCloseModal = () => {
@@ -31,8 +30,6 @@ const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
 
     const { getAccessTokenSilently } = useAuth0()
 
-
-
     const { register, handleSubmit, reset, formState } = useForm<FormValues>();
     const { errors, isSubmitSuccessful } = formState;
     console.log(errors);
@@ -44,8 +41,6 @@ const AddMovieModal: React.FC<AddMovieModalProps> = ({ isOpen, onClose }) => {
         const userId = currentUser?.id
 
         if (userId) await createNewMovie(userId, data, getAccessTokenSilently)
-        console.log("data:", data)
-
     }
 
     useEffect(() => {
